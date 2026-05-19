@@ -1,0 +1,283 @@
+:root {
+    /* Cores - Fundos */
+    --surface-page: #05070d;
+    --surface-card: #0a0e1a;
+    --surface-elevated: #0f1424;
+    --surface-hover: #141929;
+    --surface-hud: rgba(5, 7, 13, 0.88);
+
+    /* Cores - Texto */
+    --text-primary: #ffffff;
+    --text-secondary: #d1d5db;
+    --text-muted: #6b7280;
+
+    /* Cores - Accent */
+    --accent-primary: #2563EB;
+    --accent-hover: #1d4ed8;
+    --accent-light: #3b82f6;
+    --accent-subtle: rgba(37, 99, 235, 0.12);
+
+    /* Cores - Status */
+    --status-success: #10b981;
+    --status-error: #ef4444;
+    --status-warning: #f59e0b;
+
+    /* Cores - Ranking */
+    --rank-gold: linear-gradient(135deg, #fbbf24, #f59e0b);
+    --rank-silver: linear-gradient(135deg, #9ca3af, #6b7280);
+    --rank-bronze: linear-gradient(135deg, #f97316, #ea580c);
+
+    /* Bordas */
+    --border-default: rgba(255, 255, 255, 0.07);
+    --border-subtle: rgba(255, 255, 255, 0.04);
+    --border-accent: rgba(37, 99, 235, 0.4);
+
+    /* Geometria */
+    --radius-card: 12px;
+    --radius-button: 8px;
+    --radius-input: 8px;
+    --radius-badge: 6px;
+    --radius-pill: 999px;
+    --radius-modal: 16px;
+
+    /* Tipografia */
+    --font-interface: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    --font-data: 'JetBrains Mono', 'Roboto Mono', monospace;
+
+    /* Transições */
+    --transition-fast: 150ms ease;
+    --transition-base: 250ms ease;
+    --transition-slow: 350ms ease;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    -webkit-font-smoothing: antialiased;
+}
+
+body {
+    width: 100vw;
+    height: 100vh;
+    overflow: hidden;
+    font-family: var(--font-interface);
+    background: transparent;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+#tablet-wrapper {
+    width: 1000px;
+    height: 650px;
+    background: var(--surface-page);
+    border-radius: var(--radius-modal);
+    border: 1px solid var(--border-default);
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    box-shadow: 0 24px 64px rgba(0,0,0,0.8);
+    opacity: 0;
+    transform: scale(0.95);
+    transition: all var(--transition-base);
+    pointer-events: none;
+    position: relative;
+}
+
+#tablet-wrapper.active {
+    opacity: 1;
+    transform: scale(1);
+    pointer-events: all;
+}
+
+/* Background Texture */
+.bg-texture {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    pointer-events: none;
+    background-image: linear-gradient(var(--border-subtle) 1px, transparent 1px);
+    background-size: 100% 40px;
+    opacity: 0.2;
+}
+
+/* Header */
+.tablet-header {
+    height: 60px;
+    width: 100%;
+    background: var(--surface-card);
+    border-bottom: 1px solid var(--border-default);
+    display: flex;
+    align-items: center;
+    padding: 0 24px;
+    z-index: 10;
+}
+
+.brand {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.brand img {
+    height: 28px;
+}
+
+.brand span {
+    font-weight: 800;
+    font-size: 18px;
+    color: var(--text-primary);
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+.nav-tabs {
+    display: flex;
+    gap: 8px;
+    margin-left: 60px;
+}
+
+.nav-tab {
+    padding: 8px 16px;
+    border-radius: var(--radius-button);
+    color: var(--text-muted);
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: var(--transition-fast);
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.nav-tab:hover {
+    color: var(--text-secondary);
+    background: var(--surface-hover);
+}
+
+.nav-tab.active {
+    color: var(--accent-primary);
+    background: var(--accent-subtle);
+}
+
+/* Content Area */
+.tablet-content {
+    flex: 1;
+    padding: 24px;
+    overflow-y: auto;
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 16px;
+    align-content: start;
+}
+
+/* Scrollbar */
+.tablet-content::-webkit-scrollbar {
+    width: 6px;
+}
+
+.tablet-content::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+.tablet-content::-webkit-scrollbar-thumb {
+    background: var(--surface-elevated);
+    border-radius: 10px;
+}
+
+/* Cards */
+.menu-item {
+    background: var(--surface-card);
+    border: 1px solid var(--border-default);
+    border-radius: var(--radius-card);
+    padding: 20px;
+    cursor: pointer;
+    transition: all var(--transition-base);
+    position: relative;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.menu-item:hover {
+    background: var(--surface-elevated);
+    border-color: var(--border-accent);
+    transform: translateY(-2px);
+    box-shadow: 0 8px 16px rgba(0,0,0,0.4);
+}
+
+.menu-item-icon {
+    font-size: 24px;
+    color: var(--accent-primary);
+    margin-bottom: 4px;
+}
+
+.menu-item-title {
+    font-weight: 700;
+    font-size: 16px;
+    color: var(--text-primary);
+}
+
+.menu-item-description {
+    font-size: 12px;
+    color: var(--text-muted);
+    line-height: 1.4;
+}
+
+/* Close Button */
+.close-btn {
+    margin-left: auto;
+    width: 32px;
+    height: 32px;
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--text-muted);
+    cursor: pointer;
+    transition: var(--transition-fast);
+}
+
+.close-btn:hover {
+    background: var(--status-error);
+    color: white;
+}
+
+/* Drift HUD (Original) */
+#drift {
+    position: fixed;
+    bottom: 50px;
+    left: 50%;
+    transform: translateX(-50%);
+    pointer-events: none;
+}
+
+#drift .content {
+    background: var(--surface-card);
+    border: 1px solid var(--status-success);
+    border-radius: var(--radius-card);
+    display: flex;
+    align-items: center;
+    padding: 10px 20px;
+    gap: 15px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.5);
+}
+
+#drift .contador {
+    font-family: var(--font-data);
+    font-size: 24px;
+    font-weight: 800;
+    color: var(--text-primary);
+}
+
+#drift .tag {
+    font-size: 10px;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    color: var(--status-success);
+    font-weight: 700;
+}

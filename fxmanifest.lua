@@ -3,7 +3,7 @@ game "gta5"
 
 description "Responsável por fazer as principais conexões entre os resources da mri Qbox"
 author "MRI QBOX Team"
-version "MRIQBOX_VERSION"
+version "v1.1.6"
 
 ui_page "web-side/index.html"
 
@@ -24,6 +24,7 @@ server_scripts {
 }
 
 client_scripts {
+	"modules/mri/client-side/ox_lib-modules/nui_bridge.lua",
 	"**/**/client/*",
 	"**/**/client-side/**/*",
 }

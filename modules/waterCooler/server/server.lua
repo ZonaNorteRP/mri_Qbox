@@ -48,25 +48,26 @@ end
 -- Function to handle excessive drinking
 local function handleExcessiveDrinking(src)
     local currentTime = os.time()
-    local playerData = Players[src]
-
-    if not playerData or currentTime - playerData.lastDrinkTime > 60 then
+    if not Players[src] then
         Players[src] = { count = 1, lastDrinkTime = currentTime }
     else
-        playerData.count = playerData.count + 1
-        playerData.lastDrinkTime = currentTime
+        Players[src].count = Players[src].count + 1
+        Players[src].lastDrinkTime = currentTime
     end
 
-    if Players[src].count > excessive_drink then
+    local drinksInPastMinute = 0
+    for _, playerData in pairs(Players) do
+        if currentTime - playerData.lastDrinkTime <= 60 then
+            drinksInPastMinute = drinksInPastMinute + playerData.count
+        end
+    end
+
+    if drinksInPastMinute > excessive_drink then
         KillPlayer(src)
     else
         notify(src, "Você está bebendo água demais!", 'error')
     end
 end
-
-AddEventHandler('playerDropped', function()
-    Players[source] = nil
-end)
 
 local function updateClientHUD(src, hunger, thirst)
     TriggerClientEvent('hud:client:UpdateNeeds', src, hunger, thirst)

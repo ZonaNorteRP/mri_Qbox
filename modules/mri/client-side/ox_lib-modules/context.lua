@@ -163,7 +163,7 @@ function AbrirMenuJogador()
     lib.registerContext({
         id = 'menu_jogador',
         title = '![logo]('..imageUrl..') Olá '..PlayerData.charinfo.firstname,
-        description = 'BEM VINDO À MRI QBOX',
+        description = 'BEM VINDO À Zona Norte',
         options = options
     })
 
@@ -266,7 +266,7 @@ function OpenAdminMenu()
             icon = 'fa-solid fa-user-tie',
             iconAnimation = 'fade',
             onSelect = function()
-                ExecuteCommand('adm')
+                TriggerEvent('mri_Qadmin:client:OpenUI')
             end
         },
         {

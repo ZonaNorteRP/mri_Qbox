@@ -1,86 +1,98 @@
-<html>
-    <head>
-        <title>#alternative</title>
-        <script src="https://unpkg.com/vue@2.5.17/dist/vue.js"></script>
-    </head>
-    <style>
-        @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;600;700;800;900&display=swap%27');
-
-        #drift .content{
-            position: fixed;
-            bottom: 5%;
-            left: 50%;
-            transform: translate(-50%, -5%);
-            width: 15%;
-            height: 8%;
-            border-radius: 5px;
-            background: rgb(32, 38, 45, .8);
-            border: solid #53ff6f 1px;
-        }
-
-
-        #drift .left{
-            position: relative;
-            float: left;
-            height: 100%;
-            width: 30%;
-            background-color: #40C057;
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Zona Norte Tablet</title>
+    
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;700;800&display=swap" rel="stylesheet">
+    
+    <!-- Icons (Font Awesome 6) -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- Styles -->
+    <link rel="stylesheet" href="style.css">
+    
+    <!-- Vue 2 (Keeping it as it was likely used) -->
+    <script src="https://unpkg.com/vue@2.5.17/dist/vue.js"></script>
+</head>
+<body>
+    <div id="app">
+        <!-- Tablet Menu -->
+        <div id="tablet-wrapper" :class="{ active: showMenu }">
+            <div class="bg-texture"></div>
             
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
+            <header class="tablet-header">
+                <div class="brand">
+                    <img src="icones/logo24.png" alt="Logo">
+                    <span>Zona Norte</span>
+                </div>
+                
+                <nav class="nav-tabs">
+                    <div v-if="parentMenu" class="nav-tab" @click="backMenu">
+                        <i class="fa-solid fa-arrow-left"></i>
+                        Voltar
+                    </div>
+                    <div 
+                        v-for="cat in categories" 
+                        :key="cat.id"
+                        class="nav-tab" 
+                        :class="{ active: currentCategory === cat.id }"
+                        @click="currentCategory = cat.id"
+                    >
+                        <i :class="cat.icon"></i>
+                        {{ cat.label }}
+                    </div>
+                </nav>
+                
+                <div class="close-btn" @click="closeMenu">
+                    <i class="fa-solid fa-xmark"></i>
+                </div>
+            </header>
 
-        #drift .left img{
-            margin-top: 20%;
-            width: 70%;
-        }
+            <main class="tablet-content">
+                <div style="grid-column: 1 / -1; margin-bottom: 20px;">
+                    <h1 style="color: var(--text-primary); font-size: 28px; font-weight: 800; margin-bottom: 4px;">{{ menuTitle }}</h1>
+                    <p style="color: var(--text-muted); font-size: 14px; font-weight: 500;">{{ menuDescription }}</p>
+                </div>
+                
+                <div 
+                    v-for="(item, index) in filteredItems" 
+                    :key="index"
+                    class="menu-item"
+                    @click="selectItem(item)"
+                >
+                    <div class="menu-item-icon">
+                        <i :class="getIcon(item.icon)"></i>
+                    </div>
+                    <div class="menu-item-title">{{ item.title }}</div>
+                    <div class="menu-item-description" v-html="formatDescription(item.description)"></div>
+                    
+                    <div v-if="item.arrow" style="position: absolute; right: 20px; top: 50%; transform: translateY(-50%); color: var(--text-muted);">
+                        <i class="fa-solid fa-chevron-right"></i>
+                    </div>
+                </div>
+            </main>
+        </div>
 
-        #drift .right{
-            position: relative;
-            float: left;
-            width: 70%;
-            height: 100%;
-
-            display: flex;
-            justify-content: center;
-            align-items: center;
-        }
-
-        #drift .right .contador{
-            position: absolute;
-            color: rgba(255, 255, 255);
-            font-family: Orbitron;
-            font-size: 3vh;
-            margin-top: -1%;
-            letter-spacing: 2px;
-            font-weight: 900;
-        }
-
-        #drift .right .tag{
-            margin-top: 20%;
-            position: relative;
-            color: rgba(255,255,255,0.6);
-
-            font-size: .7vh;
-            letter-spacing: .4vw;
-
-            font-family: 'Orbitron', sans-serif;
-            font-weight: 400;
-        }
-    </style>
-    <body>
-        <section id="drift" v-if="driftCountn > 0">
+        <!-- Drift HUD (Refurbished) -->
+        <section id="drift" v-if="driftPoints > 0">
             <div class="content">
                 <div class="left">
-                    <img src="icones/drift.svg" alt="">
+                    <img src="icones/drift.svg" alt="" style="width: 24px; filter: invert(1);">
                 </div>
                 <div class="right">
-                    <p class="contador" v-html="driftCount"></p>
                     <p class="tag">DRIFT POINTS</p>
+                    <p class="contador">{{ driftDisplay }}</p>
                 </div>
             </div>
         </section>
-        <script src="core.js"></script>
-    </body>
+    </div>
+
+    <!-- Scripts -->
+    <script src="core.js"></script>
+</body>
 </html>
